@@ -3,8 +3,10 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 from aiogram import executor
+from aiogram.utils.exceptions import CantParseEntities
 
 from settings import Settings
+from utils.html import format_html
 
 settings = Settings()
 bot = Bot(settings.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
@@ -15,10 +17,14 @@ dp = Dispatcher(bot, storage=storage)
 def escape_spec_characters(text: str) -> str:
     return text.replace(">", "&#62;").replace("<", "&#60")
 
-# @dp.message_handler(Command("test"), state=None)
+
 @dp.message_handler()
 async def echo(message: types.Message):
-    await message.answer(escape_spec_characters(message.text))
+
+    try:
+        await message.answer(message.text)
+    except CantParseEntities :
+        await message.answer(escape_spec_characters(message.text))
 
 
 
