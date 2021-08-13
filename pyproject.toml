@@ -8,6 +8,7 @@ authors = ["Dmitriy Suchkov <Account.log@yandex.ru>"]
 python = "^3.9"
 aiogram = "^2.14.3"
 pydantic = {extras = ["dotenv"], version = "^1.8.2"}
+Django = "^3.2.6"
 
 [tool.poetry.dev-dependencies]
 
